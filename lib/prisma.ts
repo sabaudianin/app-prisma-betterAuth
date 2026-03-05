@@ -1,16 +1,7 @@
 import "dotenv/config";
 import { PrismaClient } from "@/lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
-
-const connectionString = process.env.DATABASE_URL!;
-
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false, // AWS RDS często tego wymaga
-  },
-});
+import { pool } from "./db";
 
 const adapter = new PrismaPg(pool);
 
@@ -22,7 +13,7 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     adapter,
-    log: ["query", "error", "warn"],
+    log: ["query", "warn", "error"],
   });
 
 if (process.env.NODE_ENV !== "production") {
