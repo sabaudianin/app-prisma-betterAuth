@@ -19,15 +19,15 @@ model User {
   email         String    @unique
   emailVerified Boolean   @default(false)
   name          String?
-  image         String?   // Avatar URL
+  image         String?   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  // Relacje better-auth 
+  // Relacje better-auth (wymagane!)
   sessions      Session[]
   accounts      Account[]
   
-  //custom relacje 
+  // custom relacje
   savedRepos    SavedRepository[]
   techNotes     TechNote[]
   preferences   UserPreferences?
@@ -35,7 +35,7 @@ model User {
   @@map("users") // Nazwa tabeli w bazie danych
 }
 
-/// Model sesji 
+/// Model sesji - przechowuje aktywne sesje zalogowanych userów
 model Session {
   id        String   @id @default(cuid())
   userId    String
@@ -52,7 +52,7 @@ model Session {
   @@map("sessions")
 }
 
-/// Model konta
+/// Metody logowania (email/password, OAuth)
 model Account {
   id                String    @id @default(cuid())
   userId            String
@@ -62,7 +62,7 @@ model Account {
   refreshToken      String?   @db.Text
   idToken           String?   @db.Text
   expiresAt         DateTime?
-  password          String?   // Hash hasła 
+  password          String?   // Hash hasła (tylko dla credential)
   createdAt         DateTime  @default(now())
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -72,7 +72,7 @@ model Account {
   @@map("accounts")
 }
 
-/// Model weryfikacji 
+/// Model weryfikacji - tokeny do weryfikacji emaila
 model Verification {
   id         String   @id @default(cuid())
   identifier String   // Email usera
@@ -84,7 +84,7 @@ model Verification {
   @@map("verifications")
 }
 
-
+/// Zapisane repozytoria GitHub
 model SavedRepository {
   id          String   @id @default(cuid())
   userId      String
@@ -151,11 +151,11 @@ model UserPreferences {
   @@map("user_preferences")
 }
 
-/// Cache dla danych z zewnętrznych API 
+/// Cache dla danych z zewnętrznych API
 model ApiCache {
   id        String   @id @default(cuid())
   
-  // Klucz cache 
+  // Klucz cache (np.github:user:octocat
   cacheKey  String   @unique
   
   // Dane z API (JSON)
