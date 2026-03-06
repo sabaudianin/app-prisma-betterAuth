@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
 }
 
@@ -44,6 +44,7 @@ model Session {
   ipAddress String?
   userAgent String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
   // Relacja do User
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -64,6 +65,7 @@ model Account {
   expiresAt         DateTime?
   password          String?   // Hash hasła (tylko dla credential)
   createdAt         DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt  
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
@@ -79,6 +81,7 @@ model Verification {
   value      String   // Token weryfikacyjny
   expiresAt  DateTime
   createdAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
   @@unique([identifier, value])
   @@map("verifications")
