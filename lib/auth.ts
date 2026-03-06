@@ -1,16 +1,11 @@
 import { betterAuth } from "better-auth";
-import { Kysely, PostgresDialect } from "kysely";
-import { pool } from "./db";
-
-const db = new Kysely({
-  dialect: new PostgresDialect({
-    pool,
-  }),
-});
+import { prismaAdapter } from "@better-auth/prisma-adapter";
+import { prisma } from "./prisma";
 
 export const auth = betterAuth({
-  // DATABASE - Połączenie z bazą
-  database: db,
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
 
   emailAndPassword: {
     enabled: true,
@@ -64,9 +59,6 @@ export const auth = betterAuth({
       redirectURI: `${process.env.BETTER_AUTH_URL}/api/auth/callback/github`,
     },
   },
-
-  // ACCOUNT - Ustawienia konta
-
   account: {
     /*
      * - User rejestruje się przez email: test@gmail.com
