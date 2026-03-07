@@ -1,3 +1,4 @@
+import { AuthClientWrapper } from "@/components/auth-client-wrapper/AuthClientWrapper";
 import { AuthView } from "@daveyplate/better-auth-ui";
 import { authViewPaths } from "@daveyplate/better-auth-ui/server";
 import { Terminal } from "lucide-react";
@@ -32,7 +33,7 @@ export default async function AuthPage({
             <div className="relative group">
                 <div className="absolute -inset-0.5 bg-linear-to-r from-mauve-700 to-taupe-600 rounded-4xl blur group-hover:opacity-40 transition duration-1000"></div>
                 <div className="relative bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 p-8 rounded-4xl shadow-2xl">
-                    <AuthView
+                    <AuthClientWrapper
                         path={path}
                         redirectTo="/dashboard"
                     />
@@ -41,7 +42,7 @@ export default async function AuthPage({
                             <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-white/5"></span></div>
                             <div className="relative flex justify-center text-xs uppercase"><span className="px-2 text-white">Developer Access Only</span></div>
                         </div>
-                        <p className="text-center text-xs text-muted-foreground italic">
+                        <p className="text-center text-xs text-white italic">
                             By signing in, you agree to  <span className="underline cursor-pointer">Terms of Service</span>.
                         </p>
                     </div>
