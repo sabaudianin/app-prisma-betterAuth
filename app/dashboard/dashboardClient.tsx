@@ -52,8 +52,49 @@ type DashboardClientProps = {
     preferences?: Preferences;
 };
 
-export const DashboardClient = () => {
+export function DashboardClient({
+    user,
+    stats,
+    recentNotes,
+    recentRepos,
+    preferences,
+}: DashboardClientProps) {
+    const router = useRouter();
+    const [isSigningOut, setIsSigningOut] = useState(false);
+
+    const handleSignOut = async () => {
+        setIsSigningOut(true);
+        try {
+            await authClient.signOut();
+            router.push("/auth/sign-in")
+        } catch (error) {
+            console.log("Sign out error!", error);
+            setIsSigningOut(false);
+        }
+    }
+
     return (
-        <div>DashboardClient</div>
+        <section className="min-h-screen bg-background">
+            <div className="border-b bg-card">
+                <div className="container mx-auto flex h-16 items-center justify-between px-4">
+                    <div className="flex items-center gap-4">
+                        <h1 className="text-2xl font-bold">DevInsight</h1>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <span className="text-sm text-muted-foreground">
+                            {user.email}
+                        </span>
+                        <button
+                            onClick={handleSignOut}
+                            disabled={isSigningOut}
+                            className="rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive/90 disabled:opacity-50"
+                        >
+                            {isSigningOut ? "Signing out..." : "Sign Out"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     )
 }

@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { DashboardClient } from "./dashboardClient";
 
 
+
 export const metadata = {
     title: "Dashboard|DevInsight",
     description: "Your personal developer dashboard"
@@ -64,8 +65,22 @@ export default async function DashboardPage() {
         redirect('/sign-in')
     }
     return (
-        <section>
-            <h1>DASHBOARD</h1>
-        </section>
-    )
+        <DashboardClient
+            user={{
+                id: user.id,
+                email: user.email,
+                name: user.name || "User",
+                image: user.image,
+                emailVerified: user.emailVerified,
+            }}
+            stats={{
+                savedRepos: userData._count.savedRepos,
+                techNotes: userData._count.techNotes,
+                activeSessions: userData._count.sessions,
+            }}
+            recentNotes={userData.techNotes}
+            recentRepos={userData.savedRepos}
+            preferences={userData.preferences || undefined}
+        />
+    );
 }
