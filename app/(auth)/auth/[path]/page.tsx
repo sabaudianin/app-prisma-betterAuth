@@ -1,5 +1,5 @@
 import { AuthClientWrapper } from "@/components/auth-client-wrapper/AuthClientWrapper";
-import { AuthView } from "@daveyplate/better-auth-ui";
+
 import { authViewPaths } from "@daveyplate/better-auth-ui/server";
 import { Terminal } from "lucide-react";
 export const dynamicParams = false;
