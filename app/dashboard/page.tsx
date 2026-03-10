@@ -7,7 +7,7 @@ import { DashboardClient } from "./dashboardClient";
 
 
 export const metadata = {
-    title: "Dashboard|DevInsight",
+    title: "Dashboard | DevInsight",
     description: "Your personal developer dashboard"
 }
 
