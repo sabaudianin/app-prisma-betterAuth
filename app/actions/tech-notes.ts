@@ -12,6 +12,16 @@ type ActionResult<T = unknown> = {
   error?: string;
 };
 
+export type TechNoteSummary = {
+  id: string;
+  title: string;
+  content: string;
+  category: string | null;
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 //CREATE
 export async function createTechNote(
   formData: FormData,
@@ -92,7 +102,9 @@ export async function createTechNote(
 
 //READ
 
-export async function getUserTechNotes(): Promise<ActionResult> {
+export async function getUserTechNotes(): Promise<
+  ActionResult<TechNoteSummary[]>
+> {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
