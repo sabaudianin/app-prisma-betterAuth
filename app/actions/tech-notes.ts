@@ -4,11 +4,13 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { noteSchema } from "@/lib/schemas/noteSchema";
 
 type ActionResult<T = unknown> = {
   success: boolean;
   data?: T;
   error?: string;
+  errors?: Record<string, string[]>; // Tutaj Zod wrzuci błędy dla każdego pola
 };
 
 export type TechNoteSummary = {
@@ -37,34 +39,49 @@ export async function createTechNote(
       };
     }
 
-    //walidacja danych
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
-    const category = formData.get("category") as string | null;
-    const tagsString = formData.get("tags") as string;
+    //wyciągam dane z formularza i wrzucam do zoda
+    const rawData = Object.fromEntries(formData.entries());
+    const validatedFields = noteSchema.safeParse(rawData);
 
-    if (!title || title.trim().length === 0) {
+    //jak zod znjadzie błedy od rzu je zwróci
+
+    if (!validatedFields.success) {
       return {
         success: false,
-        error: "Title is required",
+        errors: validatedFields.error.flatten().fieldErrors, // np.title: ["Too short"]
+        error: "Validation failed",
       };
     }
-    if (!content || content.trim().length === 0) {
-      return {
-        success: false,
-        error: "Content is required",
-      };
-    }
-    if (title.length > 200) {
-      return {
-        success: false,
-        error: "Title is too long (max 200 char)",
-      };
-    }
+
+    const { title, content, category, tags: rawTags } = validatedFields.data;
+    //walidacja danych
+    // const title = formData.get("title") as string;
+    // const content = formData.get("content") as string;
+    // const category = formData.get("category") as string | null;
+    // const tagsString = formData.get("tags") as string;
+
+    // if (!title || title.trim().length === 0) {
+    //   return {
+    //     success: false,
+    //     error: "Title is required",
+    //   };
+    // }
+    // if (!content || content.trim().length === 0) {
+    //   return {
+    //     success: false,
+    //     error: "Content is required",
+    //   };
+    // }
+    // if (title.length > 200) {
+    //   return {
+    //     success: false,
+    //     error: "Title is too long (max 200 char)",
+    //   };
+    // }
 
     //parse tags(coma separated string-> arr)
-    const tags = tagsString
-      ? tagsString
+    const tags = rawTags
+      ? rawTags
           .split(",")
           .map((tag) => tag.trim())
           .filter(Boolean)
@@ -92,7 +109,7 @@ export async function createTechNote(
       },
     };
   } catch (error) {
-    console.log("Create note error", error);
+    console.error("Create note error", error);
     return {
       success: false,
       error: "Failed to create tech Note",
@@ -192,9 +209,9 @@ export async function getTechNoteById(noteId: string): Promise<ActionResult> {
   }
 }
 
-//UPDATE
+//UPDATE WAZNE <input type="hidden" name="noteId" value={note.id} /> bo trzeba wycignac ID
 export async function updateTechNote(
-  noteId: string,
+  _prevState: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
   try {
@@ -208,43 +225,28 @@ export async function updateTechNote(
         error: "Unauthorized",
       };
     }
+    //wyciagamy dane
+    const rawData = Object.fromEntries(formData.entries());
 
-    //check is note is user note and is exist
-    const existingNote = await prisma.techNote.findUnique({
-      where: { id: noteId },
-    });
-
-    if (!existingNote) {
+    //wyciagma noteId z formData
+    const noteId = formData.get("noteId") as string;
+    if (!noteId) {
       return {
         success: false,
-        error: "Note not found",
+        error: "Note ID not found",
       };
     }
-    if (existingNote.userId !== session.user.id) {
-      return {
-        success: false,
-        error: "Unauthorized",
-      };
-    }
-    // Walidtion
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
-    const category = formData.get("category") as string | null;
-    const tagsString = formData.get("tags") as string;
+    //walidacja zOD
+    const validateFields = noteSchema.safeParse(rawData);
 
-    if (!title || title.trim().length === 0) {
+    if (!validateFields.success) {
       return {
         success: false,
-        error: "Title is required",
+        errors: validateFields.error.flatten().fieldErrors,
+        error: "Validation failed",
       };
     }
-
-    if (!content || content.trim().length === 0) {
-      return {
-        success: false,
-        error: "Content is required",
-      };
-    }
+    const { title, content, category, tags: tagsString } = validateFields.data;
 
     const tags = tagsString
       ? tagsString
@@ -255,8 +257,11 @@ export async function updateTechNote(
 
     // Update
 
-    const updateNote = await prisma.techNote.update({
-      where: { id: noteId },
+    const result = await prisma.techNote.updateMany({
+      where: {
+        id: noteId,
+        userId: session.user.id,
+      },
       data: {
         title: title.trim(),
         content: content.trim(),
@@ -264,14 +269,17 @@ export async function updateTechNote(
         tags,
       },
     });
-
+    if (result.count === 0) {
+      return { success: false, error: "Note not found or Unauthorized" };
+    }
+    //refresz cachy
     revalidatePath("/dashboard");
     revalidatePath("/notes");
     revalidatePath(`/notes/${noteId}`);
 
     return {
       success: true,
-      data: updateNote,
+      data: { id: noteId },
     };
   } catch (error) {
     console.log("Failed to update note", error);
@@ -282,8 +290,11 @@ export async function updateTechNote(
   }
 }
 
-//DELETE
-export async function deleteTechNote(noteId: string): Promise<ActionResult> {
+//DELETE tez dodac w cliencie <input type="hidden" name="noteId" value={note.id} />
+export async function deleteTechNote(
+  _prevState: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -295,6 +306,10 @@ export async function deleteTechNote(noteId: string): Promise<ActionResult> {
         error: "Unauthorized",
       };
     }
+    // Wyciagamy ID z formData
+    const noteId = formData.get("noteId") as string;
+    if (!noteId) return { success: false, error: "Missing Note ID" };
+
     const result = await prisma.techNote.deleteMany({
       where: { id: noteId, userId: session.user.id },
     });
