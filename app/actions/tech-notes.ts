@@ -23,6 +23,7 @@ export type TechNoteSummary = {
 
 //CREATE
 export async function createTechNote(
+  _prevState: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
   try {
