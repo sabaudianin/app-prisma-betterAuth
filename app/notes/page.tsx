@@ -2,7 +2,9 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { getUserTechNotes } from '@/app/actions/tech-notes'
+import { NotebookPen, ArrowLeft } from "lucide-react";
+import { getUserTechNotes } from "@/app/actions/tech-notes";
+import { NoteCard } from "@/components/notesUi/noteCard";
 
 
 export const metadata = {
@@ -31,7 +33,7 @@ export default async function NotesPage() {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 <div className="flex items-center gap-4">
                     <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground">
-                        ← Back to Dashboard
+                        <ArrowLeft /> Back to Dashboard
                     </Link>
                     <h1 className="text-xl font-bold">Tech Notes</h1>
                 </div>
@@ -50,7 +52,7 @@ export default async function NotesPage() {
             {notes.length === 0 ? (
 
                 <div className="flex min-h-100 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-                    <div className="mb-4 text-6xl">📝</div>
+                    <div className="mb-4 text-6xl"><NotebookPen /></div>
                     <h2 className="mb-2 text-2xl font-bold">No notes yet</h2>
                     <p className="mb-6 text-muted-foreground">
                         Create your first technical note to get started
@@ -63,9 +65,11 @@ export default async function NotesPage() {
                     </Link>
                 </div>
             ) : (
-                // Notes grid
+                // Notes grid NOTECARD 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-
+                    {notes.map((note) => (
+                        <NoteCard key={note.id} note={note} />
+                    ))}
                 </div>
             )}
         </div>

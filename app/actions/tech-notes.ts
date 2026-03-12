@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -33,7 +32,7 @@ export async function createTechNote(
     if (!session) {
       return {
         success: false,
-        error: "Unauthorised - signIN",
+        error: "Unauthorized - signIn",
       };
     }
 
