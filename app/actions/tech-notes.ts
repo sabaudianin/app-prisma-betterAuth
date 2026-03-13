@@ -142,7 +142,9 @@ export async function getUserTechNotes(): Promise<
 
 //GET ONE
 
-export async function getTechNoteById(noteId: string): Promise<ActionResult> {
+export async function getTechNoteById(
+  noteId: string,
+): Promise<ActionResult<TechNoteSummary>> {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -174,7 +176,7 @@ export async function getTechNoteById(noteId: string): Promise<ActionResult> {
     }
     return {
       success: true,
-      data: note,
+      data: note as TechNoteSummary,
     };
   } catch (error) {
     console.log("Failed to get note by id", error);
