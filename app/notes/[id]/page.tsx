@@ -72,8 +72,8 @@ export default async function NoteDetailPage({ params }: Props) {
                         ))}
                     </div>
                     <hr className="border-t" />
-                    <div>
-                        <pre className="whitespace-pre-wrap font-sans leading-relaxed">
+                    <div className="prose prose-slate max-w-none dark:prose-invert">
+                        <pre className="whitespace-pre-wrap font-sans text-lg leading-relaxed text-foreground/90">
                             {note.content}
                         </pre>
                     </div>
