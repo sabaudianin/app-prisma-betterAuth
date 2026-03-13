@@ -33,6 +33,7 @@ export default function NewNote() {
 
             <div className="container mx-auto max-w-2xl p-4 pt-8">
                 <form action={formAction} className="space-y-6">
+
                     {/* Główny błąd np błąd bazy danych...) */}
                     {state?.error && !state?.errors && (
                         <div className="rounded-lg border border-destructive bg-destructive/10 p-3 text-sm text-destructive">
