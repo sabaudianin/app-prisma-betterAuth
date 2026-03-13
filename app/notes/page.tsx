@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { NotebookPen, ArrowLeft } from "lucide-react";
 import { getUserTechNotes } from "@/app/actions/tech-notes";
-import { NoteCard } from "@/components/notesUi/noteCard";
+import { NoteCard } from "@/components/noteCard/noteCard";
 
 
 export const metadata = {

@@ -54,30 +54,6 @@ export async function createTechNote(
     }
 
     const { title, content, category, tags: rawTags } = validatedFields.data;
-    //walidacja danych
-    // const title = formData.get("title") as string;
-    // const content = formData.get("content") as string;
-    // const category = formData.get("category") as string | null;
-    // const tagsString = formData.get("tags") as string;
-
-    // if (!title || title.trim().length === 0) {
-    //   return {
-    //     success: false,
-    //     error: "Title is required",
-    //   };
-    // }
-    // if (!content || content.trim().length === 0) {
-    //   return {
-    //     success: false,
-    //     error: "Content is required",
-    //   };
-    // }
-    // if (title.length > 200) {
-    //   return {
-    //     success: false,
-    //     error: "Title is too long (max 200 char)",
-    //   };
-    // }
 
     //parse tags(coma separated string-> arr)
     const tags = rawTags
@@ -166,7 +142,9 @@ export async function getUserTechNotes(): Promise<
 
 //GET ONE
 
-export async function getTechNoteById(noteId: string): Promise<ActionResult> {
+export async function getTechNoteById(
+  noteId: string,
+): Promise<ActionResult<TechNoteSummary>> {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -198,7 +176,7 @@ export async function getTechNoteById(noteId: string): Promise<ActionResult> {
     }
     return {
       success: true,
-      data: note,
+      data: note as TechNoteSummary,
     };
   } catch (error) {
     console.log("Failed to get note by id", error);
@@ -272,7 +250,7 @@ export async function updateTechNote(
     if (result.count === 0) {
       return { success: false, error: "Note not found or Unauthorized" };
     }
-    //refresz cachy
+    //refresh cachy
     revalidatePath("/dashboard");
     revalidatePath("/notes");
     revalidatePath(`/notes/${noteId}`);
