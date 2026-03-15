@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { LogOut, MoveRight, Star, Search, NotebookPen, Settings } from "lucide-react";
+import Link from "next/link";
 
 
 type User = {
@@ -75,7 +76,7 @@ export function DashboardClient({
     }
 
     return (
-        <section className="min-h-screen ">
+        <section className="min-h-screen">
             <div className="border-b bg-card shadow-xl">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
                     <div className="flex items-center gap-4">
@@ -97,7 +98,7 @@ export function DashboardClient({
                 </div>
             </div>
 
-            <div className="p-2 bg-linear-to-b from-indigo-100 to-indigo-200">
+            <div className="p-2 ">
 
                 <div className="mb-8 text-center">
                     <h2 className="text-3xl font-bold">
@@ -142,17 +143,17 @@ export function DashboardClient({
                 </div>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 bg-linear-to-b from-indigo-200 to-cyan-200 text-center">
+            <div className="grid gap-8 lg:grid-cols-2 b text-center">
 
                 <div className="p-2">
                     <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-xl font-bold">Recent Notes</h3>
-                        <a
+                        <Link
                             href="/notes"
                             className="text-sm text-primary hover:underline"
                         >
                             View all <MoveRight />
-                        </a>
+                        </Link>
                     </div>
 
                     {recentNotes.length === 0 ? (
@@ -237,7 +238,7 @@ export function DashboardClient({
             </div>
 
 
-            <div className=" bg-linear-to-b from-cyan-200 to-olive-200 text-center">
+            <div className="text-center">
                 <div className="p-2">
                     <h3 className="mb-4 text-xl font-bold">Quick Actions</h3>
                     <div className="grid gap-4 md:grid-cols-3">

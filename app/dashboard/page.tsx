@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { DashboardClient } from "./dashboardClient";
+import { DashboardShell } from "@/components/dashboardShell/DashboardShell";
 
 
 
@@ -65,22 +66,25 @@ export default async function DashboardPage() {
         redirect('/sign-in')
     }
     return (
-        <DashboardClient
-            user={{
-                id: user.id,
-                email: user.email,
-                name: user.name || "User",
-                image: user.image,
-                emailVerified: user.emailVerified,
-            }}
-            stats={{
-                savedRepos: userData._count.savedRepos,
-                techNotes: userData._count.techNotes,
-                activeSessions: userData._count.sessions,
-            }}
-            recentNotes={userData.techNotes}
-            recentRepos={userData.savedRepos}
-            preferences={userData.preferences || undefined}
-        />
+        <DashboardShell>
+
+            <DashboardClient
+                user={{
+                    id: user.id,
+                    email: user.email,
+                    name: user.name || "User",
+                    image: user.image,
+                    emailVerified: user.emailVerified,
+                }}
+                stats={{
+                    savedRepos: userData._count.savedRepos,
+                    techNotes: userData._count.techNotes,
+                    activeSessions: userData._count.sessions,
+                }}
+                recentNotes={userData.techNotes}
+                recentRepos={userData.savedRepos}
+                preferences={userData.preferences || undefined}
+            />
+        </DashboardShell>
     );
 }
