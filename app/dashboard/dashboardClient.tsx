@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { LogOut, MoveRight, Star, Search, NotebookPen, Settings } from "lucide-react";
+import Link from "next/link";
 
 
 type User = {
@@ -75,7 +76,7 @@ export function DashboardClient({
     }
 
     return (
-        <section className="min-h-screen ">
+        <section className="min-h-screen">
             <div className="border-b bg-card shadow-xl">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
                     <div className="flex items-center gap-4">
@@ -97,9 +98,9 @@ export function DashboardClient({
                 </div>
             </div>
 
-            <div className="p-2 bg-linear-to-b from-indigo-100 to-indigo-200">
+            <div className="py-4 ">
 
-                <div className="mb-8 text-center">
+                <div className="py-4 md:py-8 lg:py-12 text-center">
                     <h2 className="text-3xl font-bold">
                         Welcome back, <span className='capitalize'>{user.name}</span> !
                     </h2>
@@ -109,9 +110,9 @@ export function DashboardClient({
                 </div>
 
 
-                <div className="mb-8 grid gap-4 md:grid-cols-3 text-center">
-                    <div className="rounded-lg border bg-card p-2 md:p-6">
-                        <h3 className="text-sm font-medium text-muted-foreground">
+                <div className="my-4 grid gap-4 md:grid-cols-3 text-center">
+                    <div className="rounded-lg border bg-card p-2 md:p-6 transition-all duration-300 hover:border-slate-500 hover:shadow-md">
+                        <h3 className="text-sm font-medium text-muted-foreground ">
                             Saved Repositories
                         </h3>
                         <p className="mt-2 text-3xl font-bold ">{stats.savedRepos}</p>
@@ -120,7 +121,7 @@ export function DashboardClient({
                         </p>
                     </div>
 
-                    <div className="rounded-lg border bg-card p-2 md:p-6text-center">
+                    <div className="rounded-lg border bg-card p-2 md:p-6 text-center hover:border-cyan-500 hover:shadow-md">
                         <h3 className="text-sm font-medium text-muted-foreground">
                             Tech Notes
                         </h3>
@@ -130,7 +131,7 @@ export function DashboardClient({
                         </p>
                     </div>
 
-                    <div className="rounded-lg border bg-card p-2 md:p-6 text-center">
+                    <div className="rounded-lg border bg-card p-2 md:p-6 text-center hover:border-indigo-500 hover:shadow-md">
                         <h3 className="text-sm font-medium text-muted-foreground">
                             Active Sessions
                         </h3>
@@ -142,21 +143,21 @@ export function DashboardClient({
                 </div>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 bg-linear-to-b from-indigo-200 to-cyan-200 text-center">
-
-                <div className="p-2">
+            <div className="grid gap-8 lg:grid-cols-2 b text-center">
+                {/*Recent Notes */}
+                <div className="p-4">
                     <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-xl font-bold">Recent Notes</h3>
-                        <a
+                        <Link
                             href="/notes"
-                            className="text-sm text-primary hover:underline"
+                            className="text-sm text-primary hover:underline inline-flex gap-2"
                         >
                             View all <MoveRight />
-                        </a>
+                        </Link>
                     </div>
 
                     {recentNotes.length === 0 ? (
-                        <div className="rounded-lg border bg-card p-8 text-center">
+                        <div className="rounded-lg border bg-card p-8 text-center transition-all duration-300 hover:border-slate-500 hover:shadow-md">
                             <p className="text-muted-foreground">No notes yet</p>
                             <button className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                                 Create your first note
@@ -188,19 +189,19 @@ export function DashboardClient({
                 </div>
 
                 {/* Recent Repos */}
-                <div className="p-2">
+                <div className="p-4">
                     <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-xl font-bold">Saved Repositories</h3>
-                        <a
+                        <Link
                             href="/saved"
-                            className="text-sm text-primary hover:underline"
+                            className="inline-flex items-center gap-2 text-sm text-primary hover:underline "
                         >
                             View all <MoveRight />
-                        </a>
+                        </Link>
                     </div>
 
                     {recentRepos.length === 0 ? (
-                        <div className="rounded-lg border bg-card p-8 text-center">
+                        <div className="rounded-lg border bg-card p-8 text-center transition-all duration-300 hover:border-slate-500 hover:shadow-md">
                             <p className="text-muted-foreground">No repos saved yet</p>
                             <button className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                                 Search GitHub repos
@@ -237,33 +238,34 @@ export function DashboardClient({
             </div>
 
 
-            <div className=" bg-linear-to-b from-cyan-200 to-olive-200 text-center">
+            <div className="text-center py-4">
                 <div className="p-2">
                     <h3 className="mb-4 text-xl font-bold">Quick Actions</h3>
-                    <div className="grid gap-4 md:grid-cols-3">
-                        <button className="rounded-lg border bg-card p-6 text-left transition-colors hover:bg-accent">
-                            <div className="mb-2 text-2xl"><NotebookPen /></div>
+
+                    <div className="grid gap-4 md:grid-cols-3 mt-6">
+                        <Link href="/notes/new" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-indigo-500 hover:shadow-md">
+                            <div className="mb-2 p-2 w-fit rounded-md bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                <NotebookPen size={20} />
+                            </div>
                             <h4 className="font-medium">Create Note</h4>
-                            <p className="mt-1 text-sm text-muted-foreground">
-                                Start writing a new tech note
-                            </p>
-                        </button>
+                            <p className="mt-1 text-sm text-muted-foreground">Start writing a new tech note</p>
+                        </Link>
 
-                        <button className="rounded-lg border bg-card p-6 text-left transition-colors hover:bg-accent">
-                            <div className="mb-2 text-2xl"><Search /></div>
+                        <Link href="/search" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-cyan-500 hover:shadow-md">
+                            <div className="mb-2 p-2 w-fit rounded-md bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                                <Search size={20} />
+                            </div>
                             <h4 className="font-medium">Search Repos</h4>
-                            <p className="mt-1 text-sm text-mut<Search />ed-foreground">
-                                Find and save GitHub repositories
-                            </p>
-                        </button>
+                            <p className="mt-1 text-sm text-muted-foreground">Find and save GitHub repositories</p>
+                        </Link>
 
-                        <button className="rounded-lg border bg-card p-6 text-left transition-colors hover:bg-accent">
-                            <div className="mb-2 text-2xl"><Settings /></div>
+                        <Link href="/settings" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-slate-500 hover:shadow-mdtransition-all duration-300 hover:border-slate-500 hover:shadow-md">
+                            <div className="mb-2 p-2 w-fit rounded-md bg-slate-100 text-slate-600 group-hover:bg-slate-600 group-hover:text-white transition-colors">
+                                <Settings size={20} />
+                            </div>
                             <h4 className="font-medium">Settings</h4>
-                            <p className="mt-1 text-sm text-muted-foreground">
-                                Manage your account preferences
-                            </p>
-                        </button>
+                            <p className="mt-1 text-sm text-muted-foreground">Manage your account preferences</p>
+                        </Link>
                     </div>
                 </div>
             </div>
