@@ -15,8 +15,13 @@ export const config = {
   ],
 };
 
-export async function middleware(request: NextRequest) {
-  const sessionToken = request.cookies.get("devinsight_session_token");
+export async function proxy(request: NextRequest) {
+  const allCookies = request.cookies.getAll();
+  const sessionCookie = allCookies.find(
+    (c) => c.name.includes("devinsight") && c.name.includes("session_token"),
+  );
+
+  const sessionToken = sessionCookie?.value;
 
   const isProtectedRoute =
     request.nextUrl.pathname.startsWith("/dashboard") ||

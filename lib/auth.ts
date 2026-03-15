@@ -145,7 +145,7 @@ export const auth = betterAuth({
    * max: Maximum requestów w tym oknie
    */
   rateLimit: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === "production",
     window: 60, // 60 sekund
     max: 10, // Max 10 requestów na minutę (per IP)
     /* Custom rate limit dla różnych endpointów
@@ -153,11 +153,11 @@ export const auth = betterAuth({
     customRules: {
       "/sign-in": {
         window: 60,
-        max: 5, // Max 5 prób logowania na minutę
+        max: 10, // Max 5 prób logowania na minutę
       },
       "/sign-up": {
         window: 60 * 60, // 1 godzina
-        max: 3, // Max 3 rejestracje na godzinę
+        max: 10, // Max 3 rejestracje na godzinę
       },
     },
   } /** Lista domen, które mogą wysyłać requesty do API
