@@ -1,9 +1,10 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LogOut, MoveRight, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useDevStore } from "@/store/useDevStore";
 
 
 type User = {
@@ -63,6 +64,22 @@ export function DashboardClient({
 }: DashboardClientProps) {
     const router = useRouter();
     const [isSigningOut, setIsSigningOut] = useState(false);
+
+    //Logika ZUstand
+    const setAuth = useDevStore((state) => state.setAuth);
+    const setNotes = useDevStore((state) => state.setNotes);
+
+    useEffect(() => {
+        setAuth(user);
+        const fullNotes = recentNotes.map((note) => ({
+            ...note,
+            content: "",
+            tags: [],
+            updatedAt: note.createdAt
+        }))
+        setNotes(fullNotes); setNotes(fullNotes);
+    }, [user, recentNotes, setAuth, setNotes])
+
 
     const handleSignOut = async () => {
         setIsSigningOut(true);
