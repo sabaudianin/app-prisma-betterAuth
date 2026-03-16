@@ -18,7 +18,7 @@ export default function NewNote() {
     }, [state?.success, router]);
 
     return (
-        <section className="min-h-screen bg-background ">
+        <section className="min-h-screen">
             <nav className="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
                 <div className="flex w-full max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-card/60 px-2 py-2 shadow-2xl backdrop-blur-xl transition-all hover:border-white/20">
 

@@ -29,7 +29,7 @@ export default async function NotesPage() {
 
     return (
 
-        <section className="min-h-screen px-2 bg-background ">
+        <section className="min-h-screen px-2">
 
             <nav className="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
                 <div className="flex w-full max-w-6xl items-center justify-between rounded-full border border-white/10 bg-white/70 px-6 py-2 shadow-lg backdrop-blur-md dark:bg-black/70">

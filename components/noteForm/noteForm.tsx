@@ -31,7 +31,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
     const tagsString = note.tags.join(", ");
 
     return (
-        <section className="min-h-screen bg-background">
+        <section className="min-h-screen">
             <div className="border-b bg-card shadow-sm">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
                     <div className="w-full flex items-center justify-between ">
