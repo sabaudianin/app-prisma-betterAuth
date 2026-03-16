@@ -1,9 +1,11 @@
+'use client';
 import { useActionState } from "react";
 import { updateTechNote } from "@/app/actions/tech-notes";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 import type { TechNoteSummary } from "@/app/actions/tech-notes";
 
 
@@ -29,14 +31,14 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
     const tagsString = note.tags.join(", ");
 
     return (
-        <section className="min-h-screen bg-background">
+        <section className="min-h-screen">
             <div className="border-b bg-card shadow-sm">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <div className="flex items-center gap-4">
+                    <div className="w-full flex items-center justify-between ">
                         <Link
                             href={`/notes/${note.id}`}
-                            className="text-sm text-muted-foreground hover:text-foreground">
-                            ← Back to Note
+                            className="inline-flex gap-2 items-center text-sm text-muted-foreground hover:text-foreground">
+                            <ArrowLeft className="text-sm" /> Back to Note
                         </Link>
                         <h1 className="text-xl font-bold">Edit Note</h1>
                     </div>
