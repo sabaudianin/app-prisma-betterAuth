@@ -1,27 +1,17 @@
-import { auth } from "@/lib/auth";
+
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+;
 import Link from "next/link";
 import { NotebookPen, ArrowLeft, Plus } from "lucide-react";
 import { getUserTechNotes } from "@/app/actions/tech-notes";
 import { NoteCard } from "@/components/noteCard/noteCard";
 
 
-export const metadata = {
-    title: "Tech Notes | DevInsight",
-    description: "Your technical notes and snippets",
-};
 
 
 
 export default async function NotesPage() {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
 
-    if (!session) {
-        redirect("/auth/sign-in");
-    }
 
     const result = await getUserTechNotes();
     if (!result.success) redirect("/auth/sign-in");
