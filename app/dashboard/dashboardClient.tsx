@@ -259,7 +259,7 @@ export function DashboardClient({
                             <p className="mt-1 text-sm text-muted-foreground">Find and save GitHub repositories</p>
                         </Link>
 
-                        <Link href="/settings" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-slate-500 hover:shadow-mdtransition-all duration-300 hover:border-slate-500 hover:shadow-md">
+                        <Link href="/settings" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-slate-500 hover:shadow-md ">
                             <div className="mb-2 p-2 w-fit rounded-md bg-slate-100 text-slate-600 group-hover:bg-slate-600 group-hover:text-white transition-colors">
                                 <Settings size={20} />
                             </div>

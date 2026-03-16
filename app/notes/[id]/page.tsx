@@ -3,6 +3,7 @@ import { getTechNoteById } from "@/app/actions/tech-notes";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { DeleteButton } from "@/components/deleteButton/deleteButton";
+import { ArrowLeft, Edit2 } from "lucide-react";
 
 
 type Props = {
@@ -24,26 +25,44 @@ export default async function NoteDetailPage({ params }: Props) {
     const note = result.data;
 
     return (
-        <section className="min-h-screen bg-background">
+        <section className="min-h-screen bg-background/50">
 
-            <div className="border-b bg-card shadow-md">
-                <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <Link
-                        href="/notes"
-                        className="text-sm text-muted-foreground hover:text-foreground">Back to Notes
-                    </Link>
-                    <div className="flex gap-2">
-                        <Link href={`/notes/${id}/edit`}
-                            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent">
+            <nav className="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+                <div className="flex w-full max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-card/60 px-2 py-2 shadow-2xl backdrop-blur-xl">
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/notes"
+                            className="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-secondary/80 hover:text-foreground"
+                        >
+                            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                            <span className="hidden sm:inline">Back to Notes</span>
+                        </Link>
+
+                        {/* Pionowa linia  */}
+                        <div className="h-4 w-px bg-border mx-1" />
+
+                        <span className="text-xs font-medium text-muted-foreground/60 px-2 hidden md:block">
+                            Viewing Note
+                        </span>
+                    </div>
+
+                    {/* action buttons */}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href={`/notes/${id}/edit`}
+                            className="inline-flex h-9 items-center justify-center rounded-xl border border-border bg-background/50 px-4 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground active:scale-95"
+                        >
+                            <Edit2 className="mr-2 h-3.5 w-3.5 opacity-70" />
                             Edit
                         </Link>
-                        <DeleteButton noteId={id} />
+                        <div className="transition-transform active:scale-95">
+                            <DeleteButton noteId={id} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </nav>
 
-
-            <div className="container mx-auto max-w-4xl">
+            <div className="container mx-auto pt-24 px-4 max-w-5xl">
                 <article className="space-y-4">
                     <h1 className="text-4xl font-bold">{note.title}</h1>
 

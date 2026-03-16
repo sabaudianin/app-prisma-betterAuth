@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteTechNote } from "@/app/actions/tech-notes";
