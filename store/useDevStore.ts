@@ -4,7 +4,7 @@ export type TechNoteSummary = {
   id: string;
   title: string;
   content: string;
-  category: string;
+  category: string | null;
   tags: string[];
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -14,7 +14,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  image?: string;
+  image?: string | null;
 }
 
 interface DevState {
@@ -43,7 +43,7 @@ export const useDevStore = create<DevState>((set) => ({
   updateNoteInStore: (id, data) =>
     set((state) => ({
       notes: state.notes.map((note) =>
-        note.id === id ? { ...note, ...data } : n,
+        note.id === id ? { ...note, ...data } : note,
       ),
     })),
   removeNote: (id) =>
