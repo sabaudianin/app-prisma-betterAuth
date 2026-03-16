@@ -77,28 +77,55 @@ export function DashboardClient({
 
     return (
         <section className="min-h-screen">
-            <div className="border-b bg-card shadow-xl">
-                <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <div className="flex items-center gap-4">
-                        <h1 className="text-2xl font-bold">DevInsight</h1>
-                    </div>
+
+            <nav className="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-card/80 backdrop-blur-xl shadow-2xl overflow-hidden group">
+
+                <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+
+                <div className="container mx-auto flex h-16 items-center justify-between px-6 relative">
+
 
                     <div className="flex items-center gap-4">
-                        <span className="text-sm text-muted-foreground">
-                            {user.email}
-                        </span>
+                        <div className="relative">
+                            <h1 className="text-xl font-bold tracking-tight bg-linear-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+                                DevInsight
+                            </h1>
+
+                            <span className="absolute -right-3 top-1 h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+                        </div>
+                    </div>
+
+
+                    <div className="flex items-center gap-6">
+                        <div className="hidden md:flex flex-col items-end">
+                            <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50 font-bold">Logged in</span>
+                            <span className="text-sm font-medium text-muted-foreground">{user.email}</span>
+                        </div>
+
                         <button
                             onClick={handleSignOut}
                             disabled={isSigningOut}
-                            className="rounded-md bg-indigo-300 px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-indigo-400/90 disabled:opacity-50 transition-all duration-300"
+                            className="group/btn relative flex h-10 w-10 md:w-auto md:px-4 items-center justify-center gap-2 overflow-hidden rounded-xl bg-secondary/50 border border-border transition-all hover:bg-destructive/10 hover:border-destructive/20 disabled:opacity-50"
                         >
-                            {isSigningOut ? "Signing out..." : <LogOut className="text-input text-xs" />}
+
+                            <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-destructive/5 to-transparent transition-transform duration-500 group-hover/btn:translate-x-full" />
+
+                            {isSigningOut ? (
+                                <span className="text-xs animate-pulse">...</span>
+                            ) : (
+                                <>
+                                    <LogOut className="h-4 w-4 text-muted-foreground transition-colors group-hover/btn:text-destructive duration-200" />
+                                    <span className="hidden md:block text-sm font-medium group-hover/btn:text-destructive transition-colors">
+                                        Sign out
+                                    </span>
+                                </>
+                            )}
                         </button>
                     </div>
                 </div>
-            </div>
+            </nav>
 
-            <div className="py-4 ">
+            <div className="pt-24 ">
 
                 <div className="py-4 md:py-8 lg:py-12 text-center">
                     <h2 className="text-3xl font-bold">

@@ -37,7 +37,7 @@ export default async function NotesPage() {
 
                     <Link href="/dashboard" className="group flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
                         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                        <span className="">Dashboard</span>
+                        <span className="hidden sm:inline">Dashboard</span>
                     </Link>
 
 
