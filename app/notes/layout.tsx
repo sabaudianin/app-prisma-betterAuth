@@ -1,8 +1,9 @@
-import { DashboardShell } from "@/components/dashboardShell/DashboardShell"
+
 import { ReactNode } from "react"
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { NotesNavbar } from "@/components/notesNavbar/NotesNavbar";
 
 
 
@@ -23,8 +24,14 @@ export default async function LayoutNotes({ children }: { children: ReactNode })
 
 
     return (
-        <DashboardShell>
-            {children}
-        </DashboardShell>
+
+        <div className="min-h-screen">
+            <NotesNavbar />
+            <main className="pt-24">
+
+                {children}
+            </main>
+        </div>
+
     )
 }
