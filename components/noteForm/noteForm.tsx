@@ -1,6 +1,6 @@
 'use client';
 import { useActionState } from "react";
-import { updateTechNote } from "@/app/actions/tech-notes";
+import { updateTechNote, createTechNote } from "@/app/actions/tech-notes";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -8,27 +8,28 @@ import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 import type { TechNoteSummary } from "@/app/actions/tech-notes";
 
-
+//opcjonalny jak jest edycja
 type EditNoteFormProps = {
-    note: TechNoteSummary
+    note?: TechNoteSummary
 };
-
-
-
 
 export const NoteForm = ({ note }: EditNoteFormProps) => {
     const router = useRouter();
-    const [state, formAction, isPending] = useActionState(updateTechNote, null);
+    const isEdit = !!note;
+
+    const action = isEdit ? updateTechNote : createTechNote;
+
+    const [state, formAction, isPending] = useActionState(action, null);
 
     useEffect(() => {
         if (state?.success) {
-            toast.success("Note updated successfully");
-            router.push(`/notes/${note.id}`);
+            toast.success(isEdit ? "Note updated successfully" : "Note created");
+            router.push(isEdit ? `/notes/${note.id}` : "/notes");
             router.refresh();
         }
-    }, [state?.success, router, note.id]);
+    }, [state?.success, router, note?.id, isEdit]);
 
-    const tagsString = note.tags.join(", ");
+    const tagsString = note?.tags?.join(", ") || "";
 
     return (
         <section className="min-h-screen">
@@ -36,18 +37,18 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
                     <div className="w-full flex items-center justify-between ">
                         <Link
-                            href={`/notes/${note.id}`}
+                            href={isEdit ? `/notes/${note.id}` : "/notes"}
                             className="inline-flex gap-2 items-center text-sm text-muted-foreground hover:text-foreground">
-                            <ArrowLeft className="text-sm" /> Back to Note
+                            <ArrowLeft className="text-sm" /> {isEdit ? "Back to Note" : "Back to Notes"}
                         </Link>
-                        <h1 className="text-xl font-bold">Edit Note</h1>
+                        <h1 className="text-xl font-bold">{isEdit ? "Edit Note" : "New Note"}</h1>
                     </div>
                 </div>
             </div>
 
             <div className="container mx-auto max-w-2xl p-4 pt-8">
                 <form action={formAction} className="space-y-6">
-                    <input type="hidden" name="noteId" value={note.id} />
+                    {isEdit && <input type="hidden" name="noteId" value={note.id} />}
 
                     {/* Global Error*/}
                     {state?.error && !state?.errors && (
@@ -64,7 +65,8 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             id="title"
                             name="title"
                             disabled={isPending}
-                            defaultValue={note.title}
+                            defaultValue={note?.title}
+                            placeholder="My techNote...."
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         />
                         {state?.errors?.title && (
@@ -79,7 +81,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             id="category"
                             name="category"
                             disabled={isPending}
-                            defaultValue={note.category || ""}
+                            defaultValue={note?.category || ""}
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         >
                             <option value="">Select category...</option>
@@ -119,7 +121,8 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             name="content"
                             id="content"
                             disabled={isPending}
-                            defaultValue={note.content}
+                            defaultValue={note?.content}
+                            placeholder="Write your note here..."
                             rows={12}
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         />
@@ -135,10 +138,10 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             disabled={isPending}
                             className="flex-1 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
                         >
-                            {isPending ? "Updating..." : "Update Note"}
+                            {isPending ? "Saving..." : isEdit ? "Update Note" : "Create Note"}
                         </button>
                         <Link
-                            href={`/notes/${note.id}`}
+                            href={isEdit ? `/notes/${note.id}` : "/notes"}
                             className="rounded-md border bg-card px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
                         >
                             Cancel
