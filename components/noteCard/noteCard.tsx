@@ -7,7 +7,7 @@ interface NoteCardProps {
 
 export const NoteCard = ({ note }: NoteCardProps) => {
     return (
-        <section className="group realtive flex-col rounded-lg border bg-card p-4 tranistion-all hover:shadow-lg">
+        <section className="group relative flex-col rounded-lg border bg-card p-4 tranistion-all hover:shadow-lg">
             <div className="flex items-center justify-between">
                 {note.category && (
                     <span className="rounded-full bg-secondary px-2 py-1 text-xs font-medium">{note.category}</span>

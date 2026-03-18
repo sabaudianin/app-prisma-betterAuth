@@ -1,12 +1,14 @@
 'use client';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowLeft, Plus, NotebookPen } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
+import { ReactNode } from "react";
 
-export const NotesNavbar = () => {
+interface NotesNavbarProps {
+    actions?: ReactNode
+}
+export const NotesNavbar = ({ actions }: NotesNavbarProps) => {
     const path = usePathname()
-
-
     const isList = path === "/notes";
     const isNewNote = path === "/notes/new";
     const isEditNote = path.includes("/edit");
@@ -45,7 +47,7 @@ export const NotesNavbar = () => {
                             <span>New</span>
                         </Link>
                     ) : (
-                        <div className="w-17" />
+                        actions
                     )}
                 </div>
             </div>
