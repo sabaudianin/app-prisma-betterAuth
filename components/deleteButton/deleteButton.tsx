@@ -28,7 +28,7 @@ export const DeleteButton = ({ noteId }: DeleteNoteButtonProps) => {
     return (
         <form action={formAction}>
             {/*Ukryte pole input z noteId które zostanie odebrane w akcji na serwerze*/}
-            <input type="hidden" name={noteId} />
+            <input type="hidden" name="noteId" value={noteId} />
             <button
                 type="submit"
                 disabled={isPending}
