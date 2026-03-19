@@ -65,3 +65,28 @@ export async function saveRepo(repoData: GitHubRepo): Promise<ActionResult> {
     return { success: false, error: "Couldn't save repo" };
   }
 }
+
+//get Stats
+
+export async function getGitHubStats(): Promise<ActionResult> {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) return { success: false, error: "Unauthorized" };
+    const preferences = await prisma.userPreferences.findUnique({
+      where: { userId: session.user.id },
+    });
+
+    if (!preferences?.githubUsername) {
+      return { success: false, error: "GitHub username not set" };
+    }
+
+    const profile = await githubClient.getProfile(preferences.githubUsername);
+    return { success: true, data: profile };
+  } catch (error) {
+    console.error("Get stats error", error);
+    return {
+      success: false,
+      error: "Failed to fetch stats",
+    };
+  }
+}
