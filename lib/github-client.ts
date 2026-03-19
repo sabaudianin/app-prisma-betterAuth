@@ -27,7 +27,7 @@ async function fetchGitHub<T>(
   return response.json();
 }
 
-export const github = {
+export const githubClient = {
   //Statsy pobierz usera
   getProfile: (username: string) =>
     fetchGitHub<GitHubUser>(`/users/${username}`),
