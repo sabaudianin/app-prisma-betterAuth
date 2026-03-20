@@ -58,7 +58,7 @@ export async function saveRepo(repoData: GitHubRepo): Promise<ActionResult> {
         topics: repoData.topics || [],
       },
     });
-    revalidatePath("/repositories");
+    revalidatePath("/repo");
     return { success: true, data: savedRepos };
   } catch (error) {
     console.error("Save repo error", error);
