@@ -5,9 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { githubClient } from "@/lib/github-client";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { GitHubRepo } from "@/types/github";
+import { GitHubRepo, GitHubUser } from "@/types/github";
 
-type ActionResult<T = unknown> = {
+export type ActionResult<T = unknown> = {
   success: boolean;
   data?: T;
   error?: string;
@@ -58,7 +58,7 @@ export async function saveRepo(repoData: GitHubRepo): Promise<ActionResult> {
         topics: repoData.topics || [],
       },
     });
-    revalidatePath("/repositories");
+    revalidatePath("/repo");
     return { success: true, data: savedRepos };
   } catch (error) {
     console.error("Save repo error", error);
@@ -68,7 +68,7 @@ export async function saveRepo(repoData: GitHubRepo): Promise<ActionResult> {
 
 //get Stats
 
-export async function getGitHubStats(): Promise<ActionResult> {
+export async function getGitHubStats(): Promise<ActionResult<GitHubUser>> {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) return { success: false, error: "Unauthorized" };
