@@ -251,7 +251,7 @@ export function DashboardClient({
                         <div className="mb-4 flex items-center justify-between">
                             <h3 className="text-xl font-bold">Saved Repositories</h3>
                             <Link
-                                href="/saved"
+                                href="/repo"
                                 className="inline-flex items-center gap-2 text-sm text-primary hover:underline "
                             >
                                 View all <ArrowRight />

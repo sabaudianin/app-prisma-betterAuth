@@ -40,13 +40,13 @@ export const RepoSearch = () => {
         }
     }
     return (
-        <section className="w-full">
+        <section className="w-full p-2">
             <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                     type="text"
                     placeholder="Search repositories"
-                    value="query"
+                    value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     className="w-full rounded-xl border bg-background pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
                 {isPending && <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-primary" />}
@@ -56,11 +56,11 @@ export const RepoSearch = () => {
             <div className="grid gap-4">
                 {results.map((repo) => (
                     <div key={repo.id}
-                        className="group flex items-center justify-between rounded-xl border bg-card p-4 transition-all duration-300 hover:shadow-md">
+                        className="flex items-center justify-between rounded-xl border bg-card p-2 transition-all duration-300 hover:shadow-md">
                         <div>
                             <h4 className="font-bold text-sm">{repo.full_name}</h4>
                             <p className="text-xs text-muted-foreground line-clamp-1">{repo.description}</p>
-                            <div className="flex gap-3 text-[10px] font-medium">
+                            <div className="flex gap-3 text-xs font-medium">
                                 <span className="flex items-center gap-1 text-yellow-500">
                                     <Star className="h-3 w-3 fill-current" /> {repo.stargazers_count}
                                 </span>

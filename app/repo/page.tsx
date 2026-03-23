@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getGitHubStats } from "@/app/actions/githubActions";
 import { RepoSearch } from "@/components/repoSearch/repoSearch";
-import { GitBranch, Star, ExternalLink, Trash2 } from "lucide-react";
-
+import { GitBranch, Star, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 
 export default async function RepoPage() {
@@ -22,11 +23,29 @@ export default async function RepoPage() {
 
     return (
         <section className="container mx-auto max-w-6xl p-6 pt-24">
+            <nav className="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+                <div className="flex w-full max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-card/60 px-2 py-2 shadow-2xl backdrop-blur-xl">
+                    <div className="flex items-center justify-between gap-2">
+                        <Link
+                            href="/dashboard"
+                            className="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-secondary/80 hover:text-foreground"
+                        >
+                            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                            <span className="">Dashboard</span>
+                        </Link>
+                        <div className="h-4 w-px bg-border mx-1" />
+                    </div>
+
+
+                    <h1 className="text-xl font-bold tracking-tight text-right">
+                        GitHub Manager
+                    </h1>
+
+
+
+                </div>
+            </nav>
             <header className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between"><div>
-                <h1 className="text-2xl font-bold tracking-tight">
-                    GitHub Manager
-                </h1>
-                <p className="text-muted-foreground">Search and save your favorites resources</p>
             </div>
                 {profile && (
                     <div className="flex items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm">
@@ -42,9 +61,13 @@ export default async function RepoPage() {
                     </div>
                 )}
             </header>
-
-            <div className="grid gap-10 lg:grid-cols-[1fr_350px]">
-
+            <aside className="space-y-6 p">
+                <div className="rounded-2xl border bg-muted/30 p-2">
+                    <h2 className="mb-4 font-semibold">Find New Repos</h2>
+                    <RepoSearch />
+                </div>
+            </aside>
+            <div className="grid gap-10">
                 <div className="space-y-6">
                     <h2 className="text-xl font-semibold flex items-center gap-2">
                         <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
@@ -81,12 +104,7 @@ export default async function RepoPage() {
                 </div>
 
 
-                <aside className="space-y-6">
-                    <div className="rounded-2xl border bg-muted/30 p-6">
-                        <h2 className="mb-4 font-semibold">Find New Repos</h2>
-                        <RepoSearch />
-                    </div>
-                </aside>
+
             </div>
 
         </section>
