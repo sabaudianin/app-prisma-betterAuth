@@ -251,7 +251,7 @@ export function DashboardClient({
                         <div className="mb-4 flex items-center justify-between">
                             <h3 className="text-xl font-bold">Saved Repositories</h3>
                             <Link
-                                href="/saved"
+                                href="/repo"
                                 className="inline-flex items-center gap-2 text-sm text-primary hover:underline "
                             >
                                 View all <ArrowRight />
@@ -279,7 +279,8 @@ export function DashboardClient({
                                         <p className="mt-1 text-sm text-muted-foreground">
                                             {repo.fullName}
                                         </p>
-                                        <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
+
+                                        <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
                                             {repo.language && (
                                                 <span className="flex items-center gap-1">
                                                     <span className="h-2 w-2 rounded-full bg-primary" />
@@ -309,7 +310,7 @@ export function DashboardClient({
                                 <p className="mt-1 text-sm text-muted-foreground">Start writing a new tech note</p>
                             </Link>
 
-                            <Link href="/search" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-cyan-500 hover:shadow-md">
+                            <Link href="/repo" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-cyan-500 hover:shadow-md">
                                 <div className="mb-2 p-2 w-fit rounded-md bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                                     <Search size={20} />
                                 </div>
