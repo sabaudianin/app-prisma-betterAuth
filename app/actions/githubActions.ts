@@ -105,6 +105,7 @@ export async function deleteSavedRepo(
         userId: session.user.id,
       },
     });
+    revalidatePath("/repo");
     return { success: true, data: { id: repoId } };
   } catch (error) {
     console.error("Delete repo error", error);
