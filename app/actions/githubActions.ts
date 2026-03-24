@@ -12,6 +12,7 @@ export type ActionResult<T = unknown> = {
   data?: T;
   error?: string;
 };
+type DeleteResult = { id: string };
 
 //find Repo
 
@@ -91,7 +92,9 @@ export async function getGitHubStats(): Promise<ActionResult<GitHubUser>> {
   }
 }
 
-export async function deleteSavedRepo(repoId: string): Promise<ActionResult> {
+export async function deleteSavedRepo(
+  repoId: string,
+): Promise<ActionResult<DeleteResult>> {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) return { success: false, error: "Unauthorized" };
