@@ -90,3 +90,21 @@ export async function getGitHubStats(): Promise<ActionResult<GitHubUser>> {
     };
   }
 }
+
+export async function deleteSavedRepo(repoId: string): Promise<ActionResult> {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) return { success: false, error: "Unauthorized" };
+
+    await prisma.savedRepository.delete({
+      where: {
+        id: repoId,
+        userId: session.user.id,
+      },
+    });
+    return { success: true, data: { id: repoId } };
+  } catch (error) {
+    console.error("Delete repo error", error);
+    return { success: false, error: "Failed to remove repository" };
+  }
+}

@@ -69,7 +69,7 @@ export default async function RepoPage() {
             </aside>
             <div className="grid gap-10">
                 <div className="space-y-6">
-                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                    <h2 className="flex items-center justify-center gap-2 pt-4 text-xl font-semibold ">
                         <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
                         Saved Repositories
                     </h2>

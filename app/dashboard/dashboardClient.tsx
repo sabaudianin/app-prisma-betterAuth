@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useState, useEffect } from "react";
-import { LogOut, MoveRight, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-react";
+import { LogOut, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useDevStore } from "@/store/useDevStore";
 
