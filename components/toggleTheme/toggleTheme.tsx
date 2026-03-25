@@ -1,12 +1,21 @@
 "use client"
-import { useSyncExternalStore } from "react";
-import { useLayoutEffect, useState } from "react"
+
 import { Sun, Moon } from "lucide-react";
 
-export const ThemeToggle = () => {
-    const [mounted, setMounted] = useState(false);
+export function ThemeToggle() {
+    const isDark =
+        typeof window !== "undefined" &&
+        document.documentElement.classList.contains("dark")
 
-    useLayoutEffect(() => {
-        setMounted(true)
-    }, [])
+    const toggleTheme = () => {
+        const next = !isDark
+        document.documentElement.classList.toggle("dark", next)
+        localStorage.setItem("theme", next ? "dark" : "light")
+    }
+
+    return (
+        <button suppressHydrationWarning onClick={toggleTheme}>
+            {isDark ? <Sun /> : <Moon />}
+        </button>
+    )
 }
