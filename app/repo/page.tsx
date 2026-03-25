@@ -7,6 +7,7 @@ import { RepoSearch } from "@/components/repoSearch/repoSearch";
 import { GitBranch, Star, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { DeleteRepoButton } from "@/components/deleteRepoButton/deleteRepoButton";
 
 
 export default async function RepoPage() {
@@ -69,7 +70,7 @@ export default async function RepoPage() {
             </aside>
             <div className="grid gap-10">
                 <div className="space-y-6">
-                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                    <h2 className="flex items-center justify-center gap-2 pt-4 text-xl font-semibold ">
                         <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
                         Saved Repositories
                     </h2>
@@ -88,14 +89,19 @@ export default async function RepoPage() {
                                         <a href={repo.url} target="_blank" className="text-muted-foreground hover:text-primary">
                                             <ExternalLink className="h-4 w-4" />
                                         </a>
+
                                     </div>
                                     <h3 className="font-bold text-sm mb-1 truncate">{repo.fullName}</h3>
                                     <p className="text-xs text-muted-foreground line-clamp-2 mb-4 h-8">
                                         {repo.description}
                                     </p>
-                                    <div className="flex items-center gap-2 text-xs font-medium">
-                                        <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
-                                        {repo.stars}
+                                    <div className="w-full flex items-center justify-between">
+                                        <div className="flex items-center gap-2 text-xs font-medium">
+                                            <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
+                                            {repo.stars}
+                                        </div>
+
+                                        <DeleteRepoButton repoId={repo.id} />
                                     </div>
                                 </div>
                             ))}

@@ -12,6 +12,7 @@ export type ActionResult<T = unknown> = {
   data?: T;
   error?: string;
 };
+type DeleteResult = { id: string };
 
 //find Repo
 
@@ -88,5 +89,26 @@ export async function getGitHubStats(): Promise<ActionResult<GitHubUser>> {
       success: false,
       error: "Failed to fetch stats",
     };
+  }
+}
+
+export async function deleteSavedRepo(
+  repoId: string,
+): Promise<ActionResult<DeleteResult>> {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) return { success: false, error: "Unauthorized" };
+
+    await prisma.savedRepository.delete({
+      where: {
+        id: repoId,
+        userId: session.user.id,
+      },
+    });
+    revalidatePath("/repo");
+    return { success: true, data: { id: repoId } };
+  } catch (error) {
+    console.error("Delete repo error", error);
+    return { success: false, error: "Failed to remove repository" };
   }
 }

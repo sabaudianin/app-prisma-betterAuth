@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Providers } from "@/providers/authUiProvider"
 
 import "./globals.css";
+import { scriptTheme } from "@/lib/scriptTheme/scriptTheme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: scriptTheme }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
