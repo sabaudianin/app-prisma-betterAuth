@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { DashboardClient } from "./dashboardClient";
 import { DashboardShell } from "@/components/dashboardShell/DashboardShell";
-
+import { getGitHubStats } from "@/lib/github/github";
 
 
 export const metadata = {
@@ -65,6 +65,14 @@ export default async function DashboardPage() {
     if (!userData) {
         redirect('/sign-in')
     }
+
+    //Data from GH API
+    const preferences = userData?.preferences;
+    const githubUsername = preferences?.githubUsername;
+
+    const githubStats = githubUsername
+        ? await getGitHubStats(githubUsername)
+        : null;
     return (
         <DashboardShell>
 
@@ -84,6 +92,7 @@ export default async function DashboardPage() {
                 recentNotes={userData.techNotes}
                 recentRepos={userData.savedRepos}
                 preferences={userData.preferences || undefined}
+                githubStats={githubStats}
             />
         </DashboardShell>
     );
