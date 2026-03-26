@@ -1,3 +1,4 @@
+"use server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
@@ -27,7 +28,7 @@ export async function updateAllPreferences(data: unknown) {
       },
     });
     revalidatePath("/dashboard");
-    return { succes: true };
+    return { success: true };
   } catch (error) {
     console.warn("Error updating preferneces", error);
     return {

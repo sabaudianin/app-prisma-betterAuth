@@ -6,6 +6,7 @@ import { LogOut, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-
 import Link from "next/link";
 import { useDevStore } from "@/store/useDevStore";
 import { ThemeToggle } from "@/components/toggleTheme/toggleTheme";
+import type { Preferences } from "@/types/types";
 
 type User = {
     id: string;
@@ -36,12 +37,12 @@ type RecentRepo = {
     language: string | null;
 };
 
-type Preferences = {
-    id: string;
-    userId: string;
-    githubUsername: string | null;
-    theme: string;
-};
+type GitHubStats = {
+    followers: number;
+    public_repos: number;
+    avatar_url: string;
+    bio: string | null;
+} | null;
 
 
 type DashboardClientProps = {
@@ -50,6 +51,8 @@ type DashboardClientProps = {
     recentNotes: RecentNote[];
     recentRepos: RecentRepo[];
     preferences?: Preferences;
+    githubStats: GitHubStats;
+
 };
 
 export function DashboardClient({
@@ -58,6 +61,7 @@ export function DashboardClient({
     recentNotes,
     recentRepos,
     preferences,
+    githubStats,
 }: DashboardClientProps) {
     const router = useRouter();
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -74,7 +78,7 @@ export function DashboardClient({
             tags: [],
             updatedAt: note.createdAt
         }))
-        setNotes(fullNotes); setNotes(fullNotes);
+        setNotes(fullNotes);
     }, [user, recentNotes, setAuth, setNotes])
 
     useEffect(() => {
@@ -162,8 +166,29 @@ export function DashboardClient({
                 </div>
 
 
-                <div className="my-8 grid gap-3 md:grid-cols-3 px-4">
-
+                <div className="my-8 grid gap-3 md:grid-cols-2 lg;grid-cols-4 px-4">
+                    {githubStats && (
+                        <div className="p-6 bg-card border border-slate-100 rounded-2xl flex items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <img
+                                src={githubStats.avatar_url}
+                                alt="GitHub Avatar"
+                                className="h-16 w-16 rounded-full border-2 border-primary/20"
+                                referrerPolicy="no-referrer"
+                            />
+                            <div>
+                                <h3 className="font-bold text-lg">GitHub: {preferences?.githubUsername}</h3>
+                                <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{githubStats.bio}</p>
+                                <div className="flex gap-4 text-sm">
+                                    <span className="flex items-center gap-1">
+                                        <strong>{githubStats.public_repos}</strong> Repositories
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <strong>{githubStats.followers}</strong> Followers
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <div className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-slate-500/50 hover:shadow-[0_0_30px_-10px_rgba(100,116,139,0.3)]">
                         <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-500/5 blur-2xl transition-all group-hover:bg-slate-500/10" />
 
@@ -207,6 +232,8 @@ export function DashboardClient({
                             </p>
                         </div>
                     </div>
+
+
                 </div>
 
                 <div className="grid gap-8 lg:grid-cols-2 b text-center">

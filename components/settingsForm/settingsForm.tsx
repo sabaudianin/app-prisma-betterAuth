@@ -1,3 +1,4 @@
+'use client';
 import { useTransition } from "react";
 import { updateAllPreferences } from "@/app/actions/preferences";
 import { Preferences } from "@/types/types";
@@ -13,14 +14,22 @@ export const SettingsForm = ({ preferences }: { preferences?: Preferences }) => 
             emailNews: formData.get("emailNews") === "on",
             emailDigest: formData.get("emailDigest") === "on"
         }
-        console.log(formData);
+
         startTransition(async () => {
-            const result = await updateAllPreferences(data);
-            if (result.success) {
-                toast.success("Preferences saved")
+            try {
+                const result = await updateAllPreferences(data);
+
+                if (result.success) {
+                    toast.success("Preferences saved!");
+                } else {
+                    toast.error(`Błąd: ${result.error}`)
+                }
+            } catch (error) {
+                console.error("Error updstaing preferrences", error)
+                toast.error("Błąd krytyczny połączenia");
             }
-        })
-    }
+        });
+    };
     return (
         <form action={handleSubmit} className="space-y-8 bg-card p-6 rounded-2xl border">
             <div className="space-y-4">
