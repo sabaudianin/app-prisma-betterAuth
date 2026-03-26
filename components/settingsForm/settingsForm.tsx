@@ -22,11 +22,11 @@ export const SettingsForm = ({ preferences }: { preferences?: Preferences }) => 
                 if (result.success) {
                     toast.success("Preferences saved!");
                 } else {
-                    toast.error(`Błąd: ${result.error}`)
+                    toast.error(`Error: ${result.error}`)
                 }
             } catch (error) {
                 console.error("Error updstaing preferrences", error)
-                toast.error("Błąd krytyczny połączenia");
+                toast.error("Critical Error");
             }
         });
     };
