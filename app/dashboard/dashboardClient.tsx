@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { LogOut, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useDevStore } from "@/store/useDevStore";
-
+import { ThemeToggle } from "@/components/toggleTheme/toggleTheme";
 
 type User = {
     id: string;
@@ -41,9 +41,6 @@ type Preferences = {
     userId: string;
     githubUsername: string | null;
     theme: string;
-    defaultView: string;
-    emailNews: boolean;
-    emailDigest: boolean;
 };
 
 
@@ -80,6 +77,17 @@ export function DashboardClient({
         setNotes(fullNotes); setNotes(fullNotes);
     }, [user, recentNotes, setAuth, setNotes])
 
+    useEffect(() => {
+        if (preferences?.theme) {
+            const dbTheme = preferences.theme;
+            const localTheme = localStorage.getItem("theme");
+
+            if (dbTheme !== localTheme) {
+                document.documentElement.classList.toggle("dark", dbTheme === "dark");
+                localStorage.setItem("theme", dbTheme)
+            }
+        }
+    }, [preferences?.theme]);
 
     const handleSignOut = async () => {
         setIsSigningOut(true);
@@ -114,11 +122,11 @@ export function DashboardClient({
 
 
                     <div className="flex items-center gap-6">
+                        <ThemeToggle />
                         <div className="hidden md:flex flex-col items-end">
                             <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50 font-bold">Logged in</span>
                             <span className="text-sm font-medium text-muted-foreground">{user.email}</span>
                         </div>
-
                         <button
                             onClick={handleSignOut}
                             disabled={isSigningOut}
@@ -160,7 +168,7 @@ export function DashboardClient({
                         <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-500/5 blur-2xl transition-all group-hover:bg-slate-500/10" />
 
                         <div className="relative flex flex-col items-center gap-1">
-                            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-amber-500">
                                 Saved Repositories
                             </h3>
                             <p className="text-2xl font-black tracking-tight">{stats.savedRepos}</p>

@@ -1,5 +1,5 @@
 "use client";
-
+//nowy standard
 import { useSyncExternalStore } from "react";
 
 // Subskrypcja do zmian w atrybutach <html> (MutationObserver)

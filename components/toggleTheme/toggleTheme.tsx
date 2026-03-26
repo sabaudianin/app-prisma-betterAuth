@@ -1,21 +1,35 @@
 "use client"
-
+import { useTransition } from "react";
+import { updatePreferences } from "@/app/actions/themePreferences";
 import { Sun, Moon } from "lucide-react";
+import { useThemeStatus } from "@/hooks/useThemeStore/useThemeStore";
+
 
 export function ThemeToggle() {
-    const isDark =
-        typeof window !== "undefined" &&
-        document.documentElement.classList.contains("dark")
+    const isDark = useThemeStatus();
+    const [isPending, startTransition] = useTransition();
 
     const toggleTheme = () => {
-        const next = !isDark
-        document.documentElement.classList.toggle("dark", next)
-        localStorage.setItem("theme", next ? "dark" : "light")
-    }
+        if (isPending) return;
+        // Bezpośrednia manipulacja DOM - React sam się dowie o zmianie bo mamy MutationObserver
+        const newDark = document.documentElement.classList.toggle("dark");
+        const themeStr = newDark ? "dark" : "light";
+        localStorage.setItem("theme", themeStr);
 
+        startTransition(async () => {
+            await updatePreferences(themeStr)
+        })
+    }
     return (
-        <button suppressHydrationWarning onClick={toggleTheme}>
-            {isDark ? <Sun /> : <Moon />}
+        <button onClick={toggleTheme}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border bg-card hover:bg-accent tranistion-all duration-300">
+            <div className="relative h-5 w-5">
+                {isDark ? (
+                    <Sun className="h-5 w-5 text-yellow-500 animate-in zoom-in duration-300" />
+                ) : (
+                    <Moon className="h-5 w-5 text-blue-600 animate-in zoom-in duration-300" />
+                )}
+            </div>
         </button>
     )
 }
