@@ -41,9 +41,6 @@ type Preferences = {
     userId: string;
     githubUsername: string | null;
     theme: string;
-    defaultView: string;
-    emailNews: boolean;
-    emailDigest: boolean;
 };
 
 
@@ -160,7 +157,7 @@ export function DashboardClient({
                         <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-500/5 blur-2xl transition-all group-hover:bg-slate-500/10" />
 
                         <div className="relative flex flex-col items-center gap-1">
-                            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-olive-600">
                                 Saved Repositories
                             </h3>
                             <p className="text-2xl font-black tracking-tight">{stats.savedRepos}</p>
