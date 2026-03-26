@@ -1,6 +1,6 @@
 "use client"
 import { useTransition } from "react";
-import { updatePreferences } from "@/app/actions/preferences";
+import { updatePreferences } from "@/app/actions/themePreferences";
 import { Sun, Moon } from "lucide-react";
 import { useThemeStatus } from "@/hooks/useThemeStore/useThemeStore";
 
