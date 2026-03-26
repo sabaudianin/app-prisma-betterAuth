@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { LogOut, Star, Search, NotebookPen, Settings, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useDevStore } from "@/store/useDevStore";
-
+import { ThemeToggle } from "@/components/toggleTheme/toggleTheme";
 
 type User = {
     id: string;
@@ -114,11 +114,11 @@ export function DashboardClient({
 
 
                     <div className="flex items-center gap-6">
+                        <ThemeToggle />
                         <div className="hidden md:flex flex-col items-end">
                             <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50 font-bold">Logged in</span>
                             <span className="text-sm font-medium text-muted-foreground">{user.email}</span>
                         </div>
-
                         <button
                             onClick={handleSignOut}
                             disabled={isSigningOut}
