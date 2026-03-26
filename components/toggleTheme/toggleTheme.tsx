@@ -1,16 +1,24 @@
 "use client"
-
+import { useTransition } from "react";
+import { updatePreferences } from "@/app/actions/preferences";
 import { Sun, Moon } from "lucide-react";
 import { useThemeStatus } from "@/hooks/useThemeStore/useThemeStore";
 
 
 export function ThemeToggle() {
-    const isDark = useThemeStatus()
+    const isDark = useThemeStatus();
+    const [isPending, startTransition] = useTransition();
 
     const toggleTheme = () => {
+        if (isPending) return;
         // Bezpośrednia manipulacja DOM - React sam się dowie o zmianie bo mamy MutationObserver
         const newDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", newDark ? "dark" : "light")
+        const themeStr = newDark ? "dark" : "light";
+        localStorage.setItem("theme", themeStr);
+
+        startTransition(async () => {
+            await updatePreferences(themeStr)
+        })
     }
     return (
         <button onClick={toggleTheme}

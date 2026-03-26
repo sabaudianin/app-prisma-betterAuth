@@ -3,7 +3,6 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
-import { revalidatePath } from "next/cache";
 
 export async function updatePreferences(theme: string) {
   try {
@@ -19,7 +18,7 @@ export async function updatePreferences(theme: string) {
         theme,
       },
     });
-    revalidatePath("/dashboard");
+
     return { success: true };
   } catch (error) {
     console.warn("Error saved themer", error);

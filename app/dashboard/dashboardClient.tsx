@@ -77,6 +77,17 @@ export function DashboardClient({
         setNotes(fullNotes); setNotes(fullNotes);
     }, [user, recentNotes, setAuth, setNotes])
 
+    useEffect(() => {
+        if (preferences?.theme) {
+            const dbTheme = preferences.theme;
+            const localTheme = localStorage.getItem("theme");
+
+            if (dbTheme !== localTheme) {
+                document.documentElement.classList.toggle("dark", dbTheme === "dark");
+                localStorage.setItem("theme", dbTheme)
+            }
+        }
+    }, [preferences?.theme]);
 
     const handleSignOut = async () => {
         setIsSigningOut(true);
