@@ -44,7 +44,8 @@ export default function Home() {
         </section>
 
         <section className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 md:pt-16">
-          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50">
+
+          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50 text-center">
             <div className="flex items-center justify-center rounded-xl p-2 ">
               <NotebookPen className="h-6 w-6 bg-blue-500/10 text-blue-600" />
             </div>
@@ -54,7 +55,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50">
+          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50 text-center">
             <div className="flex items-center justify-center rounded-xl p-2 ">
               <Github className="h-6 w-6 bg-black text-white rounded-full" />
             </div>
@@ -64,7 +65,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50">
+          <div className="group rounded-2xl border bg-card p-8 transition-all hover:border-primary/50 text-center">
             <div className="flex items-center justify-center rounded-xl p-2 ">
               <Code2 className="h-6 w-6 bg-green-500/10 text-green-600" />
             </div>

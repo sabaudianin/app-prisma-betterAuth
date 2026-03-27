@@ -27,12 +27,12 @@ export default async function NoteDetailPage({ params }: Props) {
         <section className="min-h-screen">
 
             <NotesNavbar actions={<div className="flex gap-2">
-                <Link href={`/notes/${id}/edit`} className="group relative overflow-hidden inline-flex h-10 items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/10 px-4 text-sm font-semibold   hover:bg-green-500 hover:text-white ] active:scale-95 disabled:opacity-50 transition-all duration-300">Edit</Link>
+                <Link href={`/notes/${id}/edit`} className="group relative overflow-hidden inline-flex h-10 items-center gap-2 rounded-xl border border-green-500/20 bg-green-500/10 px-4 text-sm font-semibold hover:bg-green-500 hover:text-white active:scale-95 disabled:opacity-50 transition-all duration-300">Edit</Link>
                 <DeleteButton noteId={id} />
             </div>} />
 
-            <div className="container mx-auto pt-24 px-4 max-w-5xl">
-                <article className="space-y-4">
+            <div className="container mx-auto pt-24 px-2 md:px-4 max-w-5xl">
+                <article className="space-y-4 bg-card p-4 rounded">
                     <h1 className="text-4xl font-bold">{note.title}</h1>
 
                     <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ export default async function NoteDetailPage({ params }: Props) {
                     </div>
                     <hr className="border-t" />
                     <div className="prose prose-slate max-w-none dark:prose-invert">
-                        <pre className="whitespace-pre-wrap font-sans text-lg leading-relaxed text-foreground/90">
+                        <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-foreground/90">
                             {note.content}
                         </pre>
                     </div>
