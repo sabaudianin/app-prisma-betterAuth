@@ -14,7 +14,7 @@ export const NotesNavbar = ({ actions }: NotesNavbarProps) => {
     const isEditNote = path.includes("/edit");
 
     return (
-        <nav className="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+        <nav className="fixed top-2 inset-x-0 z-50 flex justify-center px-1">
             <div className="flex w-full max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-card/60 px-2 py-2 shadow-2xl backdrop-blur-xl">
                 <div className="flex items-center gap-2">
                     <Link
@@ -28,7 +28,7 @@ export const NotesNavbar = ({ actions }: NotesNavbarProps) => {
                     {/* Pionowa linia  */}
                     <div className="h-4 w-px bg-border mx-1" />
 
-                    <div className="flex items-center gap-2 rounded-full bg-secondary/50 px-4 py-1.5 border border-border">
+                    <div className="flex items-center gap-2 rounded-full bg-secondary/50 px-2 py-2border border-border">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
                         <h1 className="text-sm font-semibold tracking-tight">
                             {isNewNote ? "New Note" : isEditNote ? "Editing Note" : "Tech Notes"}
@@ -41,7 +41,7 @@ export const NotesNavbar = ({ actions }: NotesNavbarProps) => {
                     {isList ? (
                         <Link
                             href="/notes/new"
-                            className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground px-4 text-sm font-medium text-background transition-transform active:scale-95 hover:opacity-90"
+                            className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground px-2 text-sm font-medium text-background transition-transform active:scale-95 hover:opacity-90"
                         >
                             <Plus className="h-4 w-4" />
                             <span>New</span>

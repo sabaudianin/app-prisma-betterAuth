@@ -46,8 +46,7 @@ export default async function RepoPage() {
 
                 </div>
             </nav>
-            <header className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between"><div>
-            </div>
+            <header className="mb-10">
                 {profile && (
                     <div className="flex items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm">
                         <img

@@ -337,7 +337,7 @@ export function DashboardClient({
                         <h3 className="mb-4 text-xl font-bold">Quick Actions</h3>
 
                         <div className="grid gap-4 md:grid-cols-3 mt-6">
-                            <Link href="/notes/new" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-indigo-500 hover:shadow-md">
+                            <Link href="/notes/new" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-indigo-500 hover:shadow-md flex flex-col justify-center items-center">
                                 <div className="mb-2 p-2 w-fit rounded-md bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                                     <NotebookPen size={20} />
                                 </div>
@@ -345,20 +345,20 @@ export function DashboardClient({
                                 <p className="mt-1 text-sm text-muted-foreground">Start writing a new tech note</p>
                             </Link>
 
-                            <Link href="/repo" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-cyan-500 hover:shadow-md">
+                            <Link href="/repo" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-cyan-500 hover:shadow-md flex flex-col justify-center items-center">
                                 <div className="mb-2 p-2 w-fit rounded-md bg-cyan-100 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                                     <Search size={20} />
                                 </div>
-                                <h4 className="font-medium">Search Repos</h4>
-                                <p className="mt-1 text-sm text-muted-foreground">Find and save GitHub repositories</p>
+                                <h4 className="font-medium text-center">Search Repos</h4>
+                                <p className="mt-1 text-sm text-muted-foreground text-center">Find and save GitHub repositories</p>
                             </Link>
 
-                            <Link href="/settings" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-slate-500 hover:shadow-md ">
+                            <Link href="/settings" className="group rounded-lg border bg-card/50 backdrop-blur-sm p-6 text-left transition-all duration-300 hover:border-slate-500 hover:shadow-md flex flex-col justify-center items-center">
                                 <div className="mb-2 p-2 w-fit rounded-md bg-slate-100 text-slate-600 group-hover:bg-slate-600 group-hover:text-white transition-colors">
                                     <Settings size={20} />
                                 </div>
                                 <h4 className="font-medium">Settings</h4>
-                                <p className="mt-1 text-sm text-muted-foreground">Manage your account preferences</p>
+                                <p className="mt-1 text-sm text-muted-foreground text-center">Manage your account preferences</p>
                             </Link>
                         </div>
                     </div>
