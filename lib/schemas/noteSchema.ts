@@ -5,7 +5,7 @@ export const noteSchema = z.object({
     .string()
     .min(1, "TItle is required")
     .max(200, "Title too long(max 200 characters"),
-  content: z.string().min(1, "COntent is required"),
+  content: z.string().min(1, "Content is required"),
   category: z
     .string()
     .nullable()
