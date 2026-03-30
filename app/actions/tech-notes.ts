@@ -11,6 +11,7 @@ type ActionResult<T = unknown> = {
   data?: T;
   error?: string;
   errors?: Record<string, string[]>; // Tutaj Zod wrzuci błędy dla każdego pola
+  values?: Record<string, string>;
 };
 
 export type TechNoteSummary = {
@@ -50,6 +51,7 @@ export async function createTechNote(
         success: false,
         errors: validatedFields.error.flatten().fieldErrors, // np.title: ["Too short"]
         error: "Validation failed",
+        values: rawData,
       };
     }
 

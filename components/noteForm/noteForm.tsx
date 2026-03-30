@@ -65,7 +65,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             id="title"
                             name="title"
                             disabled={isPending}
-                            defaultValue={note?.title}
+                            defaultValue={state?.values?.title ?? note?.title ?? ""}
                             placeholder="My techNote...."
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         />
@@ -81,7 +81,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             id="category"
                             name="category"
                             disabled={isPending}
-                            defaultValue={note?.category || ""}
+                            defaultValue={state?.values?.category ?? note?.category ?? ""}
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                         >
                             <option value="">Select category...</option>
@@ -104,7 +104,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             id="tags"
                             name="tags"
                             disabled={isPending}
-                            defaultValue={tagsString}
+                            defaultValue={state?.values?.tags ?? tagsString}
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                             placeholder="react, typescript, nextjs"
                         />
@@ -121,7 +121,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                             name="content"
                             id="content"
                             disabled={isPending}
-                            defaultValue={note?.content}
+                            defaultValue={state?.values?.content ?? note?.content ?? ""}
                             placeholder="Write your note here..."
                             rows={12}
                             className="w-full rounded-md border bg-background px-4 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
