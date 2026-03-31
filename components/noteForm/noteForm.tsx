@@ -33,21 +33,10 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
 
     return (
         <section className="min-h-screen">
-            <div className="border-b bg-card shadow-sm">
-                <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <div className="w-full flex items-center justify-between ">
-                        <Link
-                            href={isEdit ? `/notes/${note.id}` : "/notes"}
-                            className="inline-flex gap-2 items-center text-sm text-muted-foreground hover:text-foreground">
-                            <ArrowLeft className="text-sm" /> {isEdit ? "Back to Note" : "Back to Notes"}
-                        </Link>
-                        <h1 className="text-xl font-bold">{isEdit ? "Edit Note" : "New Note"}</h1>
-                    </div>
-                </div>
-            </div>
+            <h1 className="text-xl font-bold text-center">{isEdit ? "Edit Note" : "Create New Note"}</h1>
 
             <div className="container mx-auto max-w-2xl p-4 pt-8">
-                <form action={formAction} className="space-y-6">
+                <form action={formAction} className="space-y-6 bg-card">
                     {isEdit && <input type="hidden" name="noteId" value={note.id} />}
 
                     {/* Global Error*/}
@@ -58,7 +47,7 @@ export const NoteForm = ({ note }: EditNoteFormProps) => {
                     )}
 
 
-                    <div>
+                    <div className="">
                         <label htmlFor="title" className="mb-2 block text-sm font-medium">Title</label>
                         <input
                             type="text"
