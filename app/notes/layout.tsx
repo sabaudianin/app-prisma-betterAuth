@@ -27,7 +27,7 @@ export default async function LayoutNotes({ children }: { children: ReactNode })
 
         <div className="min-h-screen">
             <NotesNavbar />
-            <main className="pt-24 "
+            <main className="pt-2"
                 style={{
                     backgroundImage: `linear-gradient(rgba(79, 70, 229, 0.2) 1px, transparent 1px), 
                             linear-gradient(90deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px)`,
