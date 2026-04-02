@@ -143,8 +143,7 @@ model UserPreferences {
   
   // Dashboard settings
   theme           String  @default("system") // "light", "dark", "system"
-  defaultView     String  @default("overview") // Jaki widok po zalogowaniu
-  
+
   // Notifications
   emailNews       Boolean @default(true)
   emailDigest     Boolean @default(false)
@@ -154,21 +153,3 @@ model UserPreferences {
   @@map("user_preferences")
 }
 
-/// Cache dla danych z zewnętrznych API
-model ApiCache {
-  id        String   @id @default(cuid())
-  
-  // Klucz cache (np.github:user:octocat
-  cacheKey  String   @unique
-  
-  // Dane z API (JSON)
-  data      Json
-  
-  // Wygaśnięcie
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  
-  @@index([cacheKey])
-  @@index([expiresAt])
-  @@map("api_cache")
-}
