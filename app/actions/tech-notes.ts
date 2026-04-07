@@ -51,7 +51,7 @@ export async function createTechNote(
         success: false,
         errors: validatedFields.error.flatten().fieldErrors, // np.title: ["Too short"]
         error: "Validation failed",
-        values: rawData,
+        values: rawData as Record<string, string>,
       };
     }
 
